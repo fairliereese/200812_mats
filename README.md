@@ -429,7 +429,7 @@ Spearman rho: 0.5303419517456668
 <img align="center" width="400" src="figures/imr90_transcript_expression_correlation_len.png">
 
 
-### Illumina GM12878 polyA+ vs. ribominus
+<!-- ### Illumina GM12878 polyA+ vs. ribominus
 
 The data from Mats is rRNA depleted, so we want to see how polyA+ datasets compare to his.
 
@@ -462,7 +462,7 @@ do
     qsub -v "p=${p}" run_kallisto_pe.sh
 done < datasets.txt
 ```
-
+ -->
 <!-- 
 ### Get the length dists of shared gene sets
 ```bash
