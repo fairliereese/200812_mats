@@ -496,7 +496,7 @@ python plot_correlation.py \
 	-i2_1 $i2_1 \
 	-i2_2 $i2_2 \
 	-s2_type "Illumina rRNA-" \
-	-celltype GM12878 \
+	-celltype gm12878 \
 	-gt_type transcript \
 	-o illumina_polya/figures/
 ```
