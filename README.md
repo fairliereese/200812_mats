@@ -528,6 +528,65 @@ Spearman rho: 0.5665595673810594
 
 <img align="center" width="400" src="illumina_polya/figures/gm12878_transcript_expression_correlation_len.png">
 
+## PacBio GM12878 old protocol vs. new protocol
+
+For the old protocol, we will use the data we used for the TALON manuscript. We'll use PB126, or Rep2, because that one looks better.
+
+```bash 
+mkdir -p old_protocol/figures
+
+old=~/talon_data/revisions_1-20/human_TALON/pb_talon_abundance.tsv 
+new=gm12878_talon_abundance.tsv
+python plot_longread_correlation.py \
+	-f1 $new \
+	-d1 PB219 \
+	-s1_type "new protocol" \
+	-f2 $old \
+	-d2 PB_GM12878_R2 \
+	-s2_type "old protocol" \
+	-celltype gm12878 \
+	-gt_type gene \
+	-o old_protocol/figures/
+
+python plot_longread_correlation.py \
+	-f1 $new \
+	-d1 PB219 \
+	-s1_type "new protocol" \
+	-f2 $old \
+	-d2 PB_GM12878_R2 \
+	-s2_type "old protocol" \
+	-celltype gm12878 \
+	-gt_type transcript \
+	-o old_protocol/figures/
+```
+
+<img align="center" width="400" src="old_protocol/figures/gm12878_gene_expression_correlation.png">
+
+```text
+11191 shared genes after filtering
+Pearson r: 0.6684362653401079 
+Spearman rho: 0.6364278192906659
+```
+
+<img align="center" width="400" src="old_protocol/figures/gm12878_gene_expression_correlation_len.png">
+
+<img align="center" width="400" src="old_protocol/figures/gm12878_gene_expression_correlation_single_isoform.png">
+
+```text
+Pearson r: 0.8703078736580908 
+Spearman rho: 0.6165535180687299
+```
+
+<img align="center" width="400" src="old_protocol/figures/gm12878_transcript_expression_correlation.png">
+
+```text
+14875 shared transcripts after filtering
+Pearson r: 0.6742673681007301 
+Spearman rho: 0.6464974732202716
+```
+
+<img align="center" width="400" src="old_protocol/figures/gm12878_transcript_expression_correlation_len.png">
+
 <!-- 
 ### Get the length dists of shared gene sets
 ```bash
