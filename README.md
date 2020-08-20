@@ -1,4 +1,4 @@
-# Comparison of Illumina vs. PacBio on Mats Ljungman's samples with the "Teenage Protocol"
+# Comparison of Illumina vs. PacBio on Mats Ljungman's samples 
 
 ### Data download from ENCODE
 ```bash 
@@ -332,8 +332,8 @@ do
     	-gt_type transcript \
     	-celltype ${cell_type} \
     	-o figures/
-done < pb_ids.txt >> transcript_output.txt
-# done < pb_bb.txt
+# done < pb_ids.txt >> transcript_output.txt
+done < pb_bb.txt
 ```
 
 #### Transcript-level correlations
