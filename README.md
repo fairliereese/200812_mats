@@ -1,4 +1,4 @@
-# Comparison of Illumina vs. PacBio on Mats Ljungman's samples 
+## Comparison of Illumina vs. PacBio on Mats Ljungman's samples 
 
 ### Data download from ENCODE
 ```bash 
@@ -165,9 +165,9 @@ do
     	-ik2 kallisto_${cell_type}_2/abundance.tsv \
     	-gt_type gene \
     	-celltype ${cell_type} \
-    	-o figures/ >> gene_output.txt
-done < pb_ids.txt
-# done < pb_bb.txt
+    	-o figures/ 
+# done < pb_ids.txt >> gene_output.txt
+done < pb_bb.txt
 ```
 
 #### Gene-level correlations
@@ -429,11 +429,11 @@ Spearman rho: 0.5303419517456668
 <img align="center" width="400" src="figures/imr90_transcript_expression_correlation_len.png">
 
 
-<!-- ### Illumina GM12878 polyA+ vs. ribominus
+## Illumina GM12878 polyA+ vs. ribominus
 
 The data from Mats is rRNA depleted, so we want to see how polyA+ datasets compare to his.
 
-#### Download the data
+### Download the data
 ```bash
 mkdir illumina_polya
 cd illumina_polya/
@@ -453,16 +453,81 @@ mv ENCFF001RVW.fastq.gz gm12878_2_2.fa.gz
 
 echo "gm12878_1" > datasets.txt
 echo "gm12878_2" >> datasets.txt
+
+cd ../
 ```
 
-#### Run Kallisto
+### Run Kallisto
 ```bash
 while read p;
 do 
     qsub -v "p=${p}" run_kallisto_pe.sh
 done < datasets.txt
 ```
- -->
+
+### Plot the correlations for gene and transcript
+* Without genes shorter than 200 bp
+* No mitochondrial genes
+* No pseudogenes
+* Genes/Transcripts that are expressed in both datasets
+* Known genes/transcripts only
+```bash
+mkdir -p illumina_polya/figures/
+
+i1_1=illumina_polya/kallisto_gm12878_1/abundance.tsv
+i1_2=illumina_polya/kallisto_gm12878_2/abundance.tsv
+i2_1=kallisto_gm12878_1/abundance.tsv
+i2_2=kallisto_gm12878_2/abundance.tsv
+python plot_correlation.py \
+	-i1_1 $i1_1 \
+	-i1_2 $i1_2 \
+	-s1_type "Illumina polyA+" \
+	-i2_1 $i2_1 \
+	-i2_2 $i2_2 \
+	-s2_type "Illumina rRNA-" \
+	-celltype GM12878 \
+	-gt_type gene \
+	-o illumina_polya/figures/
+
+python plot_correlation.py \
+	-i1_1 $i1_1 \
+	-i1_2 $i1_2 \
+	-s1_type "Illumina polyA+" \
+	-i2_1 $i2_1 \
+	-i2_2 $i2_2 \
+	-s2_type "Illumina rRNA-" \
+	-celltype GM12878 \
+	-gt_type transcript \
+	-o illumina_polya/figures/
+```
+
+<img align="center" width="400" src="illumina_polya/figures/gm12878_gene_expression_correlation.png">
+
+```text
+21703 shared genes after filtering
+Pearson r: 0.029895983129730106 
+Spearman rho: 0.8109599980436095
+```
+
+<img align="center" width="400" src="illumina_polya/figures/gm12878_gene_expression_correlation_len.png">
+
+<img align="center" width="400" src="illumina_polya/figures/gm12878_gene_expression_correlation_single_isoform.png">
+
+```text
+Pearson r: 0.011975892173405346 
+Spearman rho: 0.6568639386845537
+```
+
+<img align="center" width="400" src="illumina_polya/figures/gm12878_transcript_expression_correlation.png">
+
+```text
+55870 shared transcripts after filtering
+Pearson r: 0.021460221811021214 
+Spearman rho: 0.5665595673810594
+```
+
+<img align="center" width="400" src="illumina_polya/figures/gm12878_transcript_expression_correlation_len.png">
+
 <!-- 
 ### Get the length dists of shared gene sets
 ```bash
