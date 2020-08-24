@@ -135,11 +135,16 @@ def plot_corr(df, gt_type, celltype, oprefix, desc=None):
 		color = 'navy'
 
 	ax = sns.jointplot(data=df, x='log_tpm_long', y='log_tpm_short',
-		edgecolors=None, s=10, color=color, alpha=0.5)
+		edgecolors=None, s=10, color=color, alpha=0.5,
+		xlim=(-1,5), ylim=(-1,5))
 	xlabel = '{} log10(TPM+0.1) in {} PacBio'.format(gt_type_2, celltype.upper())
 	ylabel = '{} log10(TPM+0.1) in Illumina'.format(gt_type_2, celltype.upper())
 	ax.set_axis_labels(xlabel, ylabel)
 
+	x0, x1 = ax.ax_joint.get_xlim()
+	y0, y1 = ax.ax_joint.get_ylim()
+	lims = [max(x0, y0), min(x1, y1)]
+	ax.ax_joint.plot(lims, lims, ':k') 
 
 	fname = '{}{}_{}_expression_correlation'.format(oprefix, celltype, gt_type)
 
@@ -167,11 +172,17 @@ def plot_corr_color_len(df, gt_type, celltype, oprefix):
 	y = df.log_tpm_short.tolist()
 	c = df['log10(len)'].tolist()
 
-	plt.hexbin(x, y, C=c)
+	plt.hexbin(x, y, C=c, extent=[-1, 5, -1, 5])
 	plt.xlabel('{} log10(TPM+0.1) in {} PacBio'.format(gt_type_2, celltype.upper()))
 	plt.ylabel('{} log10(TPM+0.1) in Illumina'.format(gt_type_2, celltype.upper()))
 	cbar = plt.colorbar()
 	cbar.set_label('log10({} length)'.format(gt_type))
+
+	plt.xlim((-1,5))
+	plt.ylim((-1,5))
+
+	ax = plt.gca()
+	ax.axline([0, 0], [1, 1])
 
 	fname = '{}{}_{}_expression_correlation_len.png'.format(oprefix, celltype, gt_type)
 	plt.savefig(fname, bbox_inches='tight')
