@@ -166,8 +166,8 @@ do
     	-gt_type gene \
     	-celltype ${cell_type} \
     	-o figures/ 
-# done < pb_ids.txt >> gene_output.txt
-done < pb_bb.txt
+done < pb_ids.txt >> gene_output.txt
+# done < pb_bb.txt
 ```
 
 #### Gene-level correlations
@@ -332,8 +332,8 @@ do
     	-gt_type transcript \
     	-celltype ${cell_type} \
     	-o figures/
-# done < pb_ids.txt >> transcript_output.txt
-done < pb_bb.txt
+done < pb_ids.txt >> transcript_output.txt
+# done < pb_bb.txt
 ```
 
 #### Transcript-level correlations
@@ -586,6 +586,131 @@ Spearman rho: 0.6464974732202716
 ```
 
 <img align="center" width="400" src="old_protocol/figures/gm12878_transcript_expression_correlation_len.png">
+
+## PacBio new protocol our samples vs. new protocol Mats' samples
+
+### K562
+```bash
+mkdir -p mats_v_mortazavi/figures/
+
+mort=~/pacbio_data/PB211/TALON/PB211_talon_abundance.tsv 
+mats=k562_talon_abundance.tsv
+python plot_longread_correlation.py \
+	-f1 $mats \
+	-d1 PB218 \
+	-s1_type "Mats' sample" \
+	-f2 $mort \
+	-d2 PB211 \
+	-s2_type "Mortazavi's sample" \
+	-celltype k562 \
+	-gt_type gene \
+	-o mats_v_mortazavi/figures/
+
+python plot_longread_correlation.py \
+	-f1 $mats \
+	-d1 PB218 \
+	-s1_type "Mats' sample" \
+	-f2 $mort \
+	-d2 PB211 \
+	-s2_type "Mortazavi's sample" \
+	-celltype k562 \
+	-gt_type transcript \
+	-o mats_v_mortazavi/figures/
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/k562_gene_expression_correlation.png">
+
+```text
+15803 genes in Sample 1
+13723 genes in Sample 2
+12147 shared genes
+11317 shared genes after filtering
+Pearson r: 0.9076194199044385 
+Spearman rho: 0.9398284359972727
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/k562_gene_expression_correlation_len.png">
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/k562_gene_expression_correlation_single_isoform.png">
+
+```text
+Pearson r: 0.8767821666707334 
+Spearman rho: 0.81107071215347
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/k562_transcript_expression_correlation.png">
+
+```text
+27825 transcripts in Sample 1
+24743 transcripts in Sample 2
+19194 shared transcripts
+18460 shared transcripts after filtering
+Pearson r: 0.8968998121769332 
+Spearman rho: 0.875980415534132
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/k562_transcript_expression_correlation_len.png">
+
+### GM12878
+```bash
+mort=~/pacbio_data/PB203/TALON/PB203_talon_abundance.tsv 
+mats=gm12878_talon_abundance.tsv
+python plot_longread_correlation.py \
+	-f1 $mats \
+	-d1 PB219 \
+	-s1_type "Mats' sample" \
+	-f2 $mort \
+	-d2 PB203 \
+	-s2_type "Mortazavi's sample" \
+	-celltype gm12878 \
+	-gt_type gene \
+	-o mats_v_mortazavi/figures/
+
+python plot_longread_correlation.py \
+	-f1 $mats \
+	-d1 PB219 \
+	-s1_type "Mats' sample" \
+	-f2 $mort \
+	-d2 PB203 \
+	-s2_type "Mortazavi's sample" \
+	-celltype gm12878 \
+	-gt_type transcript \
+	-o mats_v_mortazavi/figures/
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/gm12878_gene_expression_correlation.png">
+
+```text
+15052 genes in Sample 1
+15520 genes in Sample 2
+13386 shared genes
+12749 shared genes after filtering
+Pearson r: 0.7911183212962986 
+Spearman rho: 0.9260903151767326
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/gm12878_gene_expression_correlation_len.png">
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/gm12878_gene_expression_correlation_single_isoform.png">
+
+```text
+Pearson r: 0.6179788865628953 
+Spearman rho: 0.8088945848830659
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/gm12878_transcript_expression_correlation.png">
+
+```text
+25933 transcripts in Sample 1
+29533 transcripts in Sample 2
+20794 shared transcripts
+20205 shared transcripts after filtering
+Pearson r: 0.8077615749125674 
+Spearman rho: 0.8440208175743872
+```
+
+<img align="center" width="400" src="mats_v_mortazavi/figures/gm12878_transcript_expression_correlation_len.png">
+
 
 <!-- 
 ### Get the length dists of shared gene sets
