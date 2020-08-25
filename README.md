@@ -428,6 +428,23 @@ Spearman rho: 0.5303419517456668
 
 <img align="center" width="400" src="figures/imr90_transcript_expression_correlation_len.png">
 
+#### How much internal priming is there in each dataset?
+
+```bash
+python plot_sirv.py
+```
+
+<img align="center" width="400" src="figures/sirv_bar.png">
+
+
+#### How many SIRV reads are there in each dataset?
+
+```bash 
+python plot_ip.py
+```
+
+<img align="center" width="400" src="figures/ip_bar.png">
+
 
 ## Illumina GM12878 polyA+ vs. ribominus
 
